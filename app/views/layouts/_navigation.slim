@@ -1,0 +1,31 @@
+nav.navbar.navbar-inverse.border-radius-0
+  .container-fluid
+    .navbar-header
+      button.navbar-toggle.collapsed data-target="#main-navbar" data-toggle="collapse" type="button"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand href=root_path  = I18n.t('application.name')
+    - if current_user.present?
+      #main-navbar.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          = li_link_to(:root_path)
+          = li_link_to(:root_path)
+          = li_link_to(:root_path)
+          li.dropdown
+            a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href="#" role="button"
+              | Dropdown
+              span.caret
+            ul.dropdown-menu role="menu"
+              = li_link_to(:root_path)
+              = li_link_to(:root_path)
+              li.divider
+              = li_link_to(:root_path)
+        ul.nav.navbar-nav.navbar-right
+          li.dropdown
+            a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href="#" role="button"
+              = current_user.label
+              span.caret
+            ul.dropdown-menu role="menu"
+              = li_link_to(:root_path)
