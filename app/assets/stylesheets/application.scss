@@ -1,3 +1,5 @@
+//= require leaflet
+//= require leaflet.markercluster
 //= require_tree .
 //= require_self
 @import "bootswatch-sass/paper/bootstrap.scss";
@@ -14,4 +16,24 @@ body, .container, .container-fluid{
   max-width: 100vw;
   word-wrap: break-word;
 }
+#map
+{
+  width: 100px;
+  height:100px;
+  min-height: 85%;
+  min-width: 100%;
+  display: block;
+}
 
+html, body
+{
+  height: 100%;
+}
+
+.fill
+{
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
+}

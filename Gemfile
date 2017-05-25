@@ -38,29 +38,35 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
   gem 'listen', '~> 3.0.5'
+  gem 'web-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development do
-  gem 'capistrano',         require: false
-  gem 'capistrano-rbenv',     require: false
-  gem 'capistrano-rails',   require: false
+  gem 'capistrano', require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano-passenger',   require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rbenv', require: false
+  gem 'rubocop', git: 'https://github.com/ipepe/rubocop.git'
 end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootswatch-sass'
+  gem 'rails-assets-leaflet'
+  gem 'rails-assets-leaflet-ajax'
+  gem 'rails-assets-leaflet.markercluster'
 end
 
+gem 'activerecord-import'
 gem 'dotenv-rails'
-gem 'slim-rails'
+gem 'faker'
 gem 'gon'
 gem 'non-stupid-digest-assets'
-
-
-
+gem 'pry'
+gem 'slim-rails'
+gem 'smarter_csv'
+gem 'rb-readline'

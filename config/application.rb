@@ -19,6 +19,11 @@ module RailsAppStartingTemplate
     config.generators.test_framework(:test_unit, fixture: false)
     config.generators.template_engine :slim
 
-
+    def warsaw_area
+      {
+        latitude: (52.1..52.3),
+        longitude: (20.8..21.2)
+      }
+    end
   end
 end

@@ -9,12 +9,12 @@ set :pty,             true
 set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
-set :deploy_to,       "/home/webapp/webapp"
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
+set :deploy_to,       '/home/webapp/webapp'
+set :ssh_options,     forward_agent: true, user: fetch(:user), keys: %w[~/.ssh/id_rsa.pub]
 
 ## Linked Files & Directories (Default None):
-set :linked_files, %w{.env.production config/data.yml}
-set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle uploads}
+set :linked_files, %w[.env.production config/data.yml]
+set :linked_dirs,  %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle uploads]
 
 namespace :rbenv do
   desc 'Install rbenv version of project if missing on server'
@@ -31,12 +31,12 @@ namespace :rbenv do
 end
 
 namespace :deploy do
-  desc "Make sure local git is in sync with remote."
+  desc 'Make sure local git is in sync with remote.'
   task :check_revision do
     on roles(:app) do
       unless `git rev-parse HEAD` == `git rev-parse origin/master`
-        puts "WARNING: HEAD is not the same as origin/master"
-        puts "Run `git push` to sync changes."
+        puts 'WARNING: HEAD is not the same as origin/master'
+        puts 'Run `git push` to sync changes.'
         exit
       end
     end
@@ -45,13 +45,10 @@ namespace :deploy do
   task :create_non_existant_linked_files do
     on release_roles(fetch(:rbenv_roles)) do
       fetch(:linked_files).each do |file|
-        unless test "[ -f #{file} ]"
-          execute :touch, shared_path.join(file)
-        end
+        execute :touch, shared_path.join(file) unless test "[ -f #{file} ]"
       end
     end
   end
-
 
   before 'check:linked_files', :create_non_existant_linked_files
   # before :starting,     :check_revision
