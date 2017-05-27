@@ -1,5 +1,5 @@
 # Change these
-set :repo_url,        'change_me_url_here'
+set :repo_url,        'https://github.com/ipepe/rails-geowifi.git'
 set :user,            'webapp'
 
 # Don't change these unless you know what you're doing

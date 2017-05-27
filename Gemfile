@@ -73,3 +73,4 @@ gem 'rb-readline'
 
 gem 'sqlite3'
 gem 'parallel'
+gem 'ruby-progressbar'

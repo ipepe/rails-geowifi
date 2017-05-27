@@ -264,6 +264,7 @@ DEPENDENCIES
   rails-assets-leaflet.markercluster!
   rb-readline
   rubocop!
+  ruby-progressbar
   sass-rails (~> 5.0)
   slim-rails
   smarter_csv
