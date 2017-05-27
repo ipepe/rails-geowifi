@@ -14,7 +14,7 @@ set :ssh_options,     forward_agent: true, user: fetch(:user), keys: %w[~/.ssh/i
 
 ## Linked Files & Directories (Default None):
 set :linked_files, %w[.env.production config/data.yml]
-set :linked_dirs,  %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle uploads]
+set :linked_dirs,  %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle uploads db/dumps]
 
 namespace :rbenv do
   desc 'Install rbenv version of project if missing on server'

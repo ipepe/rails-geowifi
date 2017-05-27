@@ -16,5 +16,4 @@
 //= require leaflet
 //= require 'leaflet-ajax'
 //= require 'leaflet.markercluster'
-//= require_tree .
 L.Icon.Default.imagePath = '/assets/leaflet/dist/images/';
