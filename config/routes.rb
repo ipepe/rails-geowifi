@@ -7,4 +7,9 @@ Rails.application.routes.draw do
     get :heat
   end
   resources :wifi_observations, only: [:index]
+  namespace :api do
+    namespace :v1 do
+      resource :wifi_observation_receiver, only: [:create]
+    end
+  end
 end

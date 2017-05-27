@@ -209,6 +209,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.3.13)
     sshkit (1.13.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -252,6 +253,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   non-stupid-digest-assets
+  parallel
   pg (~> 0.18, < 0.20.0)
   pry
   puma (~> 3.0)
@@ -265,6 +267,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   slim-rails
   smarter_csv
+  sqlite3
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)

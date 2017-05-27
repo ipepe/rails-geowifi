@@ -16,19 +16,23 @@ ActiveRecord::Schema.define(version: 20151109002729) do
   enable_extension "plpgsql"
 
   create_table "wifi_observations", force: :cascade do |t|
-    t.string   "bssid",                            null: false
-    t.float    "latitude",                         null: false
-    t.float    "longitude",                        null: false
-    t.string   "source",      default: "internal", null: false
-    t.json     "raw_info"
+    t.string   "bssid",                              null: false
+    t.string   "ssid"
     t.datetime "observed_at"
+    t.float    "latitude",                           null: false
+    t.float    "longitude",                          null: false
+    t.datetime "geolocated_at"
+    t.string   "source",        default: "internal", null: false
+    t.string   "id_of_source"
+    t.boolean  "is_received",   default: false,      null: false
+    t.json     "raw_info"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["bssid"], name: "index_wifi_observations_on_bssid", using: :btree
     t.index ["latitude"], name: "index_wifi_observations_on_latitude", using: :btree
     t.index ["longitude"], name: "index_wifi_observations_on_longitude", using: :btree
-    t.index ["observed_at"], name: "index_wifi_observations_on_observed_at", using: :btree
-    t.index ["source"], name: "index_wifi_observations_on_source", using: :btree
+    t.index ["source", "id_of_source"], name: "index_wifi_observations_on_source_and_id_of_source", unique: true, using: :btree
+    t.index ["ssid"], name: "index_wifi_observations_on_ssid", using: :btree
   end
 
 end

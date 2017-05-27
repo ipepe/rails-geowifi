@@ -4,4 +4,6 @@ Rails.application.config.assets.precompile += %w[.svg .eot .woff .ttf .woff2 .pn
 Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'font-awesome', 'fonts')
 Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'leaflet', 'images')
 
+Rails.application.config.assets.precompile += %w( observations_map.js )
+
 NonStupidDigestAssets.whitelist += [/.(?i:)(?:svg|eot|woff|ttf|otf)$/]

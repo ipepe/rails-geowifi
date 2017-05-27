@@ -1,24 +1,24 @@
-namespace :wifis do
+namespace :wifi do
   task import_mylnikov: :environment do
-    puts 'Importing wifis'
+    puts 'Importing mylnikov'
     puts(Benchmark.measure do
       WifiObservationsImporter.import_mylnikov
     end)
   end
 
   task import_openwifi_su: :environment do
-    start_time = Time.current
-    puts "Started mylnikov import at #{start_time}"
-    WifiObservationsImporter.import_openwifi_su
-    puts "Time elapsed = #{Time.current - start_time}s"
+    puts 'Importing openwifi_su'
+    puts(Benchmark.measure do
+      WifiObservationsImporter.import_openwifi_su
+    end)
   end
 
-  task import_radiocells: :environment do
-    start_time = Time.current
-    puts "Started mylnikov import at #{start_time}"
-    WifiObservationsImporter.import_radiocells
-    puts "Time elapsed = #{Time.current - start_time}s"
+  task import_openbmap: :environment do
+    puts 'Importing openbmap'
+    puts(Benchmark.measure do
+      WifiObservationsImporter.import_openbmap
+    end)
   end
 
-  task import_all: %i[import_mylnikov import_openwifi_su import_radiocells]
+  task import_all: %i[import_mylnikov import_openwifi_su import_openbmap]
 end
