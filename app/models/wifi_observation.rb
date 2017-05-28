@@ -2,6 +2,10 @@ class WifiObservation < ApplicationRecord
   INTERNAL_SOURCES = %w[internal mylnikov_org openbmap openwifi_su]
   validates :bssid, :latitude, :longitude, :source, presence: true
 
+  # def self.default_scope
+  #   where("bssid NOT IN (SELECT bssid FROM wifi_observations WHERE ssid ILIKE '%_nomap%' OR ssid ILIKE '%_optout%')")
+  # end
+
   # if Rails.env.development?
   #   validates :latitude, numericality: { in: Rails.application.warsaw_area[:latitude] }
   #   validates :longitude, numericality: { in: Rails.application.warsaw_area[:longitude] }
@@ -26,7 +30,7 @@ class WifiObservation < ApplicationRecord
   end
 
   def self.geojson_array
-    "["+(Parallel.map(self.pluck(:id, :bssid, :longitude, :latitude), in_processes: 1, in_threads: 3) do |id, bssid, lon, lat|
+    "["+(Parallel.map(self.pluck(:id, :bssid, :longitude, :latitude), in_processes: 1, in_threads: 2) do |id, bssid, lon, lat|
       <<-JSON
 {"type":"Feature","geometry":{"type":"Point","coordinates":[#{lon}, #{lat}]},"properties":{"id":#{id},"bssid":"#{bssid}"}}
       JSON
@@ -62,12 +66,20 @@ class WifiObservation < ApplicationRecord
     }
   end
 
+  def geolocation_accuracy
+    raw_info['geolocation_accuracy'] || 120
+  end
+
   def geojson_coordinates
     [longitude, latitude]
   end
 
   def delimetered_bssid
     bssid.to_s.scan(/.{2}/).join(':')
+  end
+
+  def bssid
+    self.class.standardize_bssid(self.read_attribute(:bssid))
   end
 
   def self.standardize_bssid(value)
