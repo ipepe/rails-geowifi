@@ -8,11 +8,15 @@ class WifiObservationsImporter
     self.table_name = 'wifi_zone'
   end
   def self.import_openbmap
+    query = WifiZone.where(
+      latitude: Rails.application.warsaw_area[:latitude],
+      longitude: Rails.application.warsaw_area[:longitude]
+    )
     progressbar = ProgressBar.create(
-      total: WifiZone.count/BATCH_SIZE,
+      total: query.count/BATCH_SIZE,
       format: "%a %e %P% Processed: %c from %C"
     )
-    WifiZone.all.in_batches(of: BATCH_SIZE) do |relation|
+    query.in_batches(of: BATCH_SIZE) do |relation|
       progressbar.increment
       WifiObservation.import %i[bssid longitude latitude observed_at raw_info source id_of_source], (
         relation.map do |wifi_zone|
@@ -44,7 +48,10 @@ class WifiObservationsImporter
     ) do |chunk|
       progressbar.increment
       WifiObservation.import %i[bssid longitude latitude raw_info source], (
-        chunk.map do |row|
+        chunk.select do |wifi|
+          Rails.application.warsaw_area[:latitude].cover?(wifi[:lat]) &&
+            Rails.application.warsaw_area[:longitude].cover?(wifi[:lon])
+        end.map do |row|
           [
             WifiObservation.standardize_bssid(row[:bssid]),
             row[:lon],
@@ -82,7 +89,10 @@ class WifiObservationsImporter
     ) do |chunk|
       progressbar.increment
       WifiObservation.import %i[bssid longitude latitude observed_at raw_info source id_of_source], (
-        chunk.map do |row|
+        chunk.select do |wifi|
+          Rails.application.warsaw_area[:latitude].cover?(wifi[:lat]) &&
+          Rails.application.warsaw_area[:longitude].cover?(wifi[:lon])
+        end.map do |row|
           [WifiObservation.standardize_bssid(row[:bssid]), row[:lon], row[:lat], DateTime.strptime(row[:updated].to_s, '%s'), row, 'mylnikov_org', row[:id]]
         end
       )

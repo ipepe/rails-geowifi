@@ -28,8 +28,8 @@ module RailsAppStartingTemplate
 
     def warsaw_area
       {
-        latitude: (52.1..52.3),
-        longitude: (20.8..21.2)
+        latitude: (52.0..52.5),
+        longitude: (20.5..21.5)
       }
     end
   end
