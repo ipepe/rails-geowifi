@@ -10,21 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109002729) do
+ActiveRecord::Schema.define(version: 20170619142650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "wifi_observations", force: :cascade do |t|
-    t.string   "bssid",                              null: false
+    t.string   "bssid",                                         null: false
     t.string   "ssid"
-    t.datetime "observed_at"
-    t.float    "latitude",                           null: false
-    t.float    "longitude",                          null: false
+    t.datetime "observed_at",   default: '2000-01-01 00:00:00', null: false
+    t.float    "latitude",                                      null: false
+    t.float    "longitude",                                     null: false
     t.datetime "geolocated_at"
-    t.string   "source",        default: "internal", null: false
+    t.string   "source",        default: "internal",            null: false
     t.string   "id_of_source"
-    t.boolean  "is_received",   default: false,      null: false
+    t.boolean  "is_received",   default: false,                 null: false
     t.json     "raw_info"
     t.datetime "created_at"
     t.datetime "updated_at"

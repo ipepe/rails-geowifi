@@ -8,11 +8,11 @@ Rails.application.routes.draw do
     get :observations
     # get :heat
   end
-  resources :wifi_observations, only: [:index]
+  resources :wifi_positions, only: [:show, :index]
   namespace :api do
     namespace :v1 do
       resource :wifi_observation_receiver, only: [:create]
-      resource :geolocate
+      resource :geolocate, only: [:create]
     end
   end
 end

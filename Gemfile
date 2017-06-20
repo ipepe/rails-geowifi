@@ -70,6 +70,7 @@ gem 'pry'
 gem 'slim-rails'
 gem 'smarter_csv'
 gem 'rb-readline'
+gem 'geocoder'
 
 gem 'sqlite3'
 gem 'parallel'

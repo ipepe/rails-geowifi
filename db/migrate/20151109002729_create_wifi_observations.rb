@@ -3,7 +3,7 @@ class CreateWifiObservations < ActiveRecord::Migration
     create_table :wifi_observations do |t|
       t.string :bssid, null: false, index: true
       t.string :ssid, index: true
-      t.datetime :observed_at
+      t.datetime :observed_at, default: Date.new(2000), null: false, index: true
 
       t.float :latitude, null: false, index: true
       t.float :longitude, null: false, index: true
@@ -11,8 +11,6 @@ class CreateWifiObservations < ActiveRecord::Migration
 
       t.string :source, default: 'internal', null: false
       t.string :id_of_source
-
-      t.boolean :is_received, default: false, null: false
 
       t.json :raw_info
 

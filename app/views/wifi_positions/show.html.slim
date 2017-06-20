@@ -1,0 +1,14 @@
+table.table.table-responsive
+  thead
+    tr
+      th BSSID
+      th SSID
+      th Latitude
+      th Longitude
+  tbody
+    - @wifi_observations.each do |wifi_observation|
+      tr
+        td = wifi_observation.bssid
+        td = wifi_observation.ssid
+        td = wifi_observation.latitude
+        td = wifi_observation.longitude

@@ -7,21 +7,16 @@ class WifiGeolocateService
         "lat": nil,
         "lng": nil
       },
-      "accuracy": nil,
+      "accuracy": 30,
       meta: []
-    }
-    params[:wifiAccessPoints].sort_by { |ap| ap[:signalStrength] }.reverse.each do |ap|
-      if (observation = WifiObservation.
-        where(bssid: WifiObservation.standardize_bssid(ap[:macAddress])).
-        order(observed_at: :desc).
-        first).present?
-        if result["accuracy"].blank?
-          result["location"]["lat"] ||= observation.latitude
-          result["location"]["lng"] ||= observation.longitude
-          result["accuracy"] ||= observation.geolocation_accuracy
-        end
-        result["meta"].push(observation.geojson_hash)
-      end
+    }.with_indifferent_access
+    positions = params[:wifiAccessPoints].sort_by { |ap| ap[:signalStrength] }.reverse.map do |ap|
+      WifiPosition.find_by(bssid: WifiObservation.standardize_bssid(ap[:macAddress]))
+    end.compact
+    result["meta"] = positions.map(&:geojson_hash)
+    if positions.present?
+      result["location"]["lat"] = positions.map(&:latitude).sum / positions.size.to_f
+      result["location"]["lng"] = positions.map(&:longitude).sum / positions.size.to_f
     end
     result
   end

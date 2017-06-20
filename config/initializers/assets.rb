@@ -6,4 +6,4 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'leafl
 
 Rails.application.config.assets.precompile += %w( observations_map.js )
 
-NonStupidDigestAssets.whitelist += [/.(?i:)(?:svg|eot|woff|ttf|otf)$/]
+NonStupidDigestAssets.whitelist += [/.(?i:)(?:svg|eot|woff|ttf|otf|png)$/]
