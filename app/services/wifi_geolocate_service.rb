@@ -7,7 +7,7 @@ class WifiGeolocateService
         "lat": nil,
         "lng": nil
       },
-      "accuracy": 30,
+      "accuracy": nil,
       meta: []
     }.with_indifferent_access
     positions = params[:wifiAccessPoints].sort_by { |ap| ap[:signalStrength] }.reverse.map do |ap|
@@ -17,6 +17,11 @@ class WifiGeolocateService
     if positions.present?
       result["location"]["lat"] = positions.map(&:latitude).sum / positions.size.to_f
       result["location"]["lng"] = positions.map(&:longitude).sum / positions.size.to_f
+      result["accuracy"] = Geocoder::Calculations.distance_between(
+        [positions.map(&:latitude).max,positions.map(&:longitude).max],
+        [positions.map(&:latitude).min,positions.map(&:longitude).min],
+        units: :km
+      )*750
     end
     result
   end
