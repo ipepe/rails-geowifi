@@ -19,6 +19,6 @@ class WifiPosition < ApplicationRecord
   end
 
   def coordinates
-    [longitude, latitude]
+    [latitude, longitude]
   end
 end
