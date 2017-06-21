@@ -10,19 +10,27 @@ class WifiGeolocateService
       "accuracy": 0,
       meta: []
     }.with_indifferent_access
-    positions = params[:wifiAccessPoints].sort_by { |ap| ap[:signalStrength] }.reverse.map do |ap|
-      WifiPosition.find_by(bssid: WifiObservation.standardize_bssid(ap[:macAddress]))
-    end.compact
-    result["meta"] = positions.map(&:geojson_hash)
+
+    positions = WifiPosition.where(bssid: params[:wifiAccessPoints].map do |ap|
+      WifiObservation.standardize_bssid(ap[:macAddress])
+    end)
+
     if positions.present?
-      result["location"]["lat"] = positions.map(&:latitude).sum / positions.size.to_f
-      result["location"]["lng"] = positions.map(&:longitude).sum / positions.size.to_f
+      result["location"]["lat"], result["location"]["lng"] = self.centroid_of(positions)
       result["accuracy"] = (Geocoder::Calculations.distance_between(
         [positions.map(&:latitude).max,positions.map(&:longitude).max],
         [positions.map(&:latitude).min,positions.map(&:longitude).min],
         units: :km
-      )*1000)
+      )*1000)+30
     end
     result
+  end
+
+  def self.centroid_of(positions)
+    if positions.size == 1
+      return [positions.first.latitude,positions.first.longitude]
+    else
+      Geocoder::Calculations.geographic_center(positions.map(&:coordinates))
+    end
   end
 end

@@ -17,4 +17,8 @@ class WifiPosition < ApplicationRecord
   def geojson_hash
     JSON.parse(self.geojson)
   end
+
+  def coordinates
+    [longitude, latitude]
+  end
 end

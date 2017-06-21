@@ -27,7 +27,7 @@ CREATE MATERIALIZED VIEW wifi_positions AS
     ORDER BY 
       (SELECT EXTRACT(YEAR FROM wo.observed_at)) DESC,
       (SELECT EXTRACT(WEEK FROM wo.observed_at)) DESC,
-      COALESCE((raw_info->>'signal_level'),'100')::int ASC
+      COALESCE((raw_info->>'signal_level'),'100')::int ASC NULLS LAST
       LIMIT 1
   )
     SQL
@@ -42,7 +42,7 @@ end $$;
 
 create trigger refresh_wifi_positions_trigger
 after insert or update or delete or truncate
-on wifi_observations for each statement 
+on wifi_observations for each statement
 execute procedure refresh_wifi_positions();
     SQL
   end
