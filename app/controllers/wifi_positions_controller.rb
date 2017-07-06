@@ -16,7 +16,8 @@ class WifiPositionsController < ApplicationController
     {
       latitude: if params['center_latitude'].present? then params['center_latitude'].to_f else 52.23 end,
       logitude: if params['center_longitude'].present? then params['center_longitude'].to_f else 21.01 end,
-      radius: if params['radius'].present? then params['radius'].to_f else 30 end
+      radius: if params['radius'].present? then params['radius'].to_f else 30 end,
+      limit: if params['limit'].present? then params['limit'].to_i else 10_000 end
     }
   end
 end

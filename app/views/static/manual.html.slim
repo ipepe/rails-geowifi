@@ -1,0 +1,32 @@
+h3 Manual
+p Ths webapp provides several api endpoints that You can use.
+
+h4 Geolocating Service
+p
+  | Get Your location based on observed Wireless Networks. This api endpoint is compatibile with
+  a<> href="https://developers.google.com/maps/documentation/geolocation/intro" The Google Maps Geolocation API
+pre = 'https://geowifi.science/api/v1/geolocate'
+p
+  | You can checkout structure and usage here:
+  a<> href="https://github.com/ipepe/android-geowifi/blob/master/app/src/main/assets/www/app.js#L53" Android App - Map Source - Javascript
+
+h5 Firefox usage
+p
+  | You can use this server for geolocation in Firefox simply by changing in advanced settings. To open Advanced Settings of Firefox browser paste into location bar this:
+  pre<> = 'about:config'
+  | Click that You accept risks of changing advanced settings of Firefox. Then search for
+  pre<> = 'geo.wifi.uri'
+  | Double click on found row and paste this uri:
+  pre<> = 'https://geowifi.science/api/v1/geolocate'
+
+
+
+h4 Wifi Receiver
+p Post Your collected Wireless Networks into:
+pre = 'https://geowifi.science/api/v1/wifi_observation_receiver'
+p
+  | Server expects data to be JSON. Also there is limit on data You can post to server. It is about 3MB. For more information about data structure check out:
+  a<> href="https://github.com/ipepe/android-geowifi/blob/master/app/src/main/java/pl/ipepe/android/geowifi/HttpPostTask.java" Android app source Code
+  | or
+  a<> href="https://github.com/ipepe/rails-geowifi/blob/master/app/services/wifi_observations_receiver_service.rb" Rails Importing Service
+

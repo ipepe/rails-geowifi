@@ -1,0 +1,16 @@
+/ http://geowifi.science/credits
+table.table.table-responsive
+  thead
+    tr
+      th Library (Gem)
+      th Author
+      th License
+      th Link
+  tbody
+    - Gem.loaded_specs.each do |gem_name, spec|
+      tr
+        td = gem_name
+        td = spec.author
+        td = spec.license
+        td
+          a href=spec.homepage = spec.homepage

@@ -7,4 +7,10 @@ en:
     title: GeoWifi - Where WIFI meets Geolocation.
     navigation:
       maps_heat: Heatmap
-      maps_observations: Observations
+      maps_observations: Dynamic Map
+      maps_all_observations: All map
+      credits: Credits
+      manual: API Manual
+      privacy: Privacy policy
+      mobile_app: Get Android app
+      about: About project

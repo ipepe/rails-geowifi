@@ -3,5 +3,7 @@ class MapsController < ApplicationController
     @without_container = true
   end
 
-  def heat; end
+  def all_observations
+    @without_container = true
+  end
 end

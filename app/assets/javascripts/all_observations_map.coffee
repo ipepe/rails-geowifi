@@ -17,7 +17,7 @@ $().ready ->
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
   }).addTo(window.map);
   cluster_group = null
-  geojson_ajax = new L.GeoJSON.AJAX("/wifi_positions.geojson")
+  geojson_ajax = new L.GeoJSON.AJAX("/wifi_positions.geojson?limit=200000")
   geojson_ajax.on 'data:loaded', ->
     if cluster_group
       map.removeLayer(cluster_group)
@@ -30,11 +30,3 @@ $().ready ->
       )
     }))
     window.map.addLayer(cluster_group)
-  window.map.on('move', debounce((=>
-    center = window.map.getCenter()
-    radius = (window.map.getBounds().getNorthEast().distanceTo(window.map.getBounds().getSouthWest())/2000) + 1.5
-    url = '/wifi_positions.geojson?'
-    url = url + "center_latitude=#{center.lat}&center_longitude=#{center.lng}"
-    url = url + "&radius=#{radius}"
-    geojson_ajax.refresh(url)
-  ), 500))
